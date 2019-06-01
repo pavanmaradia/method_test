@@ -25,3 +25,29 @@ class ListFlatten(object):
         :param requested_list: original nested list
         :return:
         """
+        if isinstance(requested_list, list):
+            self.response = {
+                'status': True,
+                'message': self.flat_list(requested_list)
+            }
+        else:
+            self.response = {
+                'status': False,
+                'message': 'Requested collection is not List'
+            }
+        return self.response
+
+    def flat_list(self, sub_list):
+        """
+        Flat sub list
+        :param sub_list: list
+        :return:
+        """
+        _list = list()
+        for element in sub_list:
+            if isinstance(element, list):
+                _list += self.flat_list(element)
+            else:
+                _list.append(element)
+
+        return _list
