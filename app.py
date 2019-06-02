@@ -15,13 +15,13 @@ from temp_tracker.temperature.api import TempTracker
 from temp_tracker.utility import jsonify_request
 
 # Remove following lines while deploy in production
-environ.update({
-    'db_username': 'root',
-    'db_password': 'root',
-    'db_host': 'localhost',
-    'db_name': 'temp_tracker',
-    'db_port': '5432'
-})
+# environ.update({
+#     'db_username': 'root',
+#     'db_password': 'root',
+#     'db_host': 'localhost',
+#     'db_name': 'temp_tracker',
+#     'db_port': '5432'
+# })
 
 app = Flask(__name__)
 CORS(app)
@@ -34,7 +34,7 @@ def temperature():
     :return:
     """
     response = {}
-
+    print('test')
     if request.method == 'POST':
         payload = jsonify_request(request)
         response = TempTracker().controller(**{
@@ -101,4 +101,4 @@ def temperature_get_mean():
 
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host="0.0.0.0", port=5000)

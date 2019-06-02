@@ -92,4 +92,4 @@ def insert_flask():
     print(resp.json())
 
 
-flatten_list_test()
+insert_flask()

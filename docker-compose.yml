@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:latest
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - database_data:/var/lib/postgresql/data
+  web:
+    container_name: method_test
+    restart: always
+    build: .
+    environment:
+      - db_username:root
+      - db_password:root
+      - db_host:db
+      - db_name:temp_tracker
+      - db_port:5432
+    volumes:
+      - .:/code
+    ports:
+      - "5000:5000"
+
+    depends_on:
+      - "db"
+
+volumes:
+  database_data: {}
