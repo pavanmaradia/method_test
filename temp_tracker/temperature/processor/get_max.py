@@ -6,6 +6,11 @@ __version__ = v1.0
 
 """
 
+from sqlalchemy import func
+
+from temp_tracker.db_utils import get_session
+from temp_tracker.models import Temperature
+
 
 class GetMax(object):
     """
@@ -25,4 +30,19 @@ class GetMax(object):
         :return:
         """
 
+        session = get_session()
+        sub_max_query = session.query(func.max(Temperature.temperature))
+        row = session.query(Temperature).filter(
+            Temperature.temperature == sub_max_query
+        ).first()
+
+        self.response = {
+            'status': True,
+            'message': {
+                'id': row.id,
+                'city': row.city,
+                'temperature': row.temperature,
+                'created_at': row.created_at
+            }
+        }
         return self.response
