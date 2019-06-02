@@ -21,11 +21,11 @@ The other Proud moment is while one non performer resource aline to me and he be
 > This code is stored in flatten_list module. Example execution is stored in test.py
 
 #### Write a class TempTracker with these methods:
-###### - insert()—records a new temperature.
-######- get_max()—returns the highest temp we've seen so far.
-######- get_min()—returns the lowest temp we've seen so far.
-######- get_mean()—returns the mean of all temps we've seen so far.
-###### - get_mean() should return a float, but the rest of the getter functions can return integers. Temperatures will all be inserted as integers. We'll record our temperatures in Fahrenheit, so we can assume they'll all be in the range 0..110.
+- insert()—records a new temperature.
+- get_max()—returns the highest temp we've seen so far.
+- get_min()—returns the lowest temp we've seen so far.
+- get_mean()—returns the mean of all temps we've seen so far.
+- get_mean() should return a float, but the rest of the getter functions can return integers. Temperatures will all be inserted as integers. We'll record our temperatures in Fahrenheit, so we can assume they'll all be in the range 0..110.
 > There were three types of endpoints for this class. 
 > 1. Execute it from test.py or import temp_tracker module inside your repository and call api
 > 2. Run App.py, which will serve as localhost rest api for insert, max, min and mean
