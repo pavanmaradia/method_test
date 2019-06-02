@@ -50,21 +50,57 @@ class TempTracker(object):
         Get maximum temperature processor
         :return:
         """
+        try:
+            from .processor.get_max import GetMax
+        except ImportError:
+            self.response = {
+                'status': False,
+                'message': 'Failed to find GetMax module'
+            }
+            return
+        self.response = GetMax().controller(**self.payload)
 
     def get_mean(self):
         """
         Get Mean temperature processor
         :return:
         """
+        try:
+            from .processor.get_mean import GetMean
+        except ImportError:
+            self.response = {
+                'status': False,
+                'message': 'Failed to find GetMean module'
+            }
+            return
+        self.response = GetMean().controller(**self.payload)
 
     def get_min(self):
         """
         Get Minimum temperature processor
         :return:
         """
+        try:
+            from .processor.get_min import GetMin
+        except ImportError:
+            self.response = {
+                'status': False,
+                'message': 'Failed to find GetMin module'
+            }
+            return
+        self.response = GetMin().controller(**self.payload)
 
     def insert(self):
         """
         Get maximum temperature processor
         :return:
         """
+        try:
+            from .processor.insert import Insert
+        except ImportError:
+            self.response = {
+                'status': False,
+                'message': 'Failed to find Insert module'
+            }
+            return
+        self.response = Insert().controller(**self.payload)
