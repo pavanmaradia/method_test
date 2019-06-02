@@ -19,7 +19,7 @@ def flatten_list_test():
     from flatten_list import ListFlatten
     x = [1, 2, [3, [4]], 5]
     print(ListFlatten().controller(x))
-    x = [1, 2, 3, [4, 5, [6, [7], 8, [9, 10, 11]]]]
+    x = [12, 21, 3, [4,[5], [6, [7], 8, [9, [10, 11]]]]]
     print(ListFlatten().controller(x))
 
 
@@ -41,7 +41,8 @@ def insert_data():
 
 def get_max():
     payload = {
-        'method': 'get_max'
+        'method': 'get_max',
+        'response': 'flask_resp'
     }
     resp = TempTracker().controller(**payload)
     print(resp)
@@ -63,4 +64,32 @@ def get_mean():
     print(resp)
 
 
-insert_data()
+# flask Rest APIs
+
+from requests import get, post
+
+
+def get_max_flask():
+    resp = get('http://localhost:5000/api/v1/temperature/max')
+    print(resp.json())
+
+
+def get_min_flask():
+    resp = get('http://localhost:5000/api/v1/temperature/min')
+    print(resp.json())
+
+
+def get_mean_flask():
+    resp = get('http://localhost:5000/api/v1/temperature/mean')
+    print(resp.json())
+
+
+def insert_flask():
+    resp = post(
+        url='http://localhost:5000/api/v1/temperature',
+        data={'temperature': 45, 'city': 'Pune'}
+    )
+    print(resp.json())
+
+
+flatten_list_test()

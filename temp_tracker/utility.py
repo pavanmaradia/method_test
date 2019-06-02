@@ -2,6 +2,8 @@
 General utility
 """
 
+from json import loads
+
 
 def required_field_validation(payload, require_fields):
     """
@@ -24,5 +26,26 @@ def required_field_validation(payload, require_fields):
             'status': False,
             'message': F'Required parameters are missing. ({fields}) requires.'
         }
+
+    return response
+
+
+def jsonify_request(req):
+    """
+    handle http request and jsonify it in return
+    :param req: http request
+    :return:
+    """
+    response = None
+    if req.is_json:
+        return req.get_json()
+
+    if req.form:
+        return req.form.to_dict()
+
+    if req.data:
+        _data = str(req.data).lstrip('b"').rstrip("\"").replace(
+            '\\n', '').replace('\\r', '').replace("\'", "\"")
+        return loads(_data)
 
     return response

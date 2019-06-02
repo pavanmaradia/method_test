@@ -22,7 +22,7 @@ class TempTracker(object):
             'get_min': self.get_min,
             'insert': self.insert
         }
-
+        self.flask_resp = dict()
         self.response = dict()
 
     def controller(self, **kwargs):
@@ -43,6 +43,9 @@ class TempTracker(object):
         self.payload = kwargs.get('payload', {})
         self.methods.get(method)()
 
+        if kwargs.get('response') == 'flask_resp':
+            return self.flask_resp
+
         return self.response
 
     def get_max(self):
@@ -58,7 +61,13 @@ class TempTracker(object):
                 'message': 'Failed to find GetMax module'
             }
             return
-        self.response = GetMax().controller(**self.payload)
+
+        self.flask_resp = GetMax().controller(**self.payload)
+        if not self.flask_resp.get('status'):
+            self.response = self.flask_resp
+            return
+
+        self.response = self.flask_resp.get('message').get('temperature')
 
     def get_mean(self):
         """
@@ -73,7 +82,14 @@ class TempTracker(object):
                 'message': 'Failed to find GetMean module'
             }
             return
-        self.response = GetMean().controller(**self.payload)
+
+        self.flask_resp = GetMean().controller(**self.payload)
+
+        if not self.flask_resp.get('status'):
+            self.response = self.flask_resp
+            return
+
+        self.response = self.flask_resp.get('message')
 
     def get_min(self):
         """
@@ -88,7 +104,12 @@ class TempTracker(object):
                 'message': 'Failed to find GetMin module'
             }
             return
-        self.response = GetMin().controller(**self.payload)
+        self.flask_resp = GetMin().controller(**self.payload)
+
+        if not self.flask_resp.get('status'):
+            self.response = self.flask_resp
+            return
+        self.response = self.flask_resp.get('message').get('temperature')
 
     def insert(self):
         """
@@ -104,3 +125,4 @@ class TempTracker(object):
             }
             return
         self.response = Insert().controller(**self.payload)
+        self.flask_resp = self.response
